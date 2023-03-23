@@ -1,18 +1,19 @@
-FROM arm64v8/node AS deps
+FROM arm64v8/node:18 AS deps
 
-RUN apt-get -yqq install git
+RUN apt-get update && apt-get -y install git
+
 RUN git clone --depth 1 --single-branch --branch master https://github.com/mikecao/umami.git /app
 WORKDIR /app
 RUN yarn install --frozen-lockfile
 
 ###
 
-FROM arm64v8/node AS builder
+FROM arm64v8/node:18 AS builder
 
 ARG DATABASE_TYPE
-ARG BASE_PATH
 
-RUN apt-get -yqq install git
+RUN apt-get update && apt-get -y install git 
+
 RUN git clone --depth 1 --single-branch --branch master https://github.com/mikecao/umami.git /app
 
 WORKDIR /app
@@ -24,14 +25,13 @@ ARG DATABASE_TYPE
 ARG BASE_PATH
 
 ENV DATABASE_TYPE $DATABASE_TYPE
-ENV BASE_PATH $BASE_PATH
 
 ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN yarn build-docker
 
 # Production image, copy all the files and run next
-FROM arm64v8/node AS runner 
+FROM arm64v8/node:18 AS runner 
 
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
