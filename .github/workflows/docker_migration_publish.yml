@@ -6,10 +6,8 @@ name: buildDocker_migration
 # documentation.
 
 on:
-  schedule:
-    - cron: '18 3 * * *'
   push:
-    branches: [ "main" ]
+    # branches: [ "main" ]
     # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
 #  pull_request:
