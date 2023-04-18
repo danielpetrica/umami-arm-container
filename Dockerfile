@@ -11,6 +11,8 @@ RUN yarn install --frozen-lockfile
 FROM arm64v8/node:16 AS builder
 
 RUN apt-get update && apt-get -y install git
+# This way the pull should not be cached 
+ADD "https://www.random.org/cgi-bin/randbyte?nbytes=10&format=h" skipcache
 RUN git clone --depth 1 --single-branch --branch master https://github.com/mikecao/umami.git /app
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
