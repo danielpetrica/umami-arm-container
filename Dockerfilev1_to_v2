@@ -1,30 +1,18 @@
 FROM arm64v8/node:18 AS deps
 
 RUN apt-get update && apt-get -y install git
+ENV NEXT_TELEMETRY_DISABLED 1
+
 
 RUN git clone --depth 1 --single-branch --branch master https://github.com/mikecao/umami.git /app
 WORKDIR /app
 RUN yarn install --frozen-lockfile
 
-###
-
-FROM arm64v8/node:18 AS builder
-
-RUN apt-get update && apt-get -y install git
-# This way the pull should not be cached 
-ADD "https://www.random.org/cgi-bin/randbyte?nbytes=10&format=h" skipcache
-RUN git clone --depth 1 --single-branch --branch master https://github.com/umami-software/migrate-v1-v2.git /app
-WORKDIR /app
-RUN yarn add @umami/migrate-v1-v2
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
-
 ENV DATABASE_TYPE mysql
-ENV BASE_PATH ''
-ENV NEXT_TELEMETRY_DISABLED 1
-
 RUN yarn build
 
 CMD ["yarn", "start"]
+
+
 
 
