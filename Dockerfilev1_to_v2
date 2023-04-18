@@ -6,13 +6,13 @@ ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN git clone --depth 1 --single-branch --branch master https://github.com/umami-software/migrate-v1-v2.git /app
 WORKDIR /app
-RUN yarn install --frozen-lockfile
 
 
 ENV DATABASE_TYPE mysql
 ENV BASE_PATH ''
 ENV NEXT_TELEMETRY_DISABLED 1
 
+RUN yarn install --frozen-lockfile
 RUN yarn build
 
 CMD ["yarn", "start"]
