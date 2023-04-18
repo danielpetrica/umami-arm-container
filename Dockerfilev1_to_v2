@@ -23,7 +23,7 @@ ENV DATABASE_TYPE mysql
 ENV BASE_PATH ''
 ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN yarn build-docker
+RUN yarn build
 
 ###
 # Production image, copy all the files and run next
