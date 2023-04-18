@@ -1,4 +1,4 @@
-FROM arm64v8/node:16 AS deps
+FROM arm64v8/node:18 AS deps
 
 RUN apt-get update && apt-get -y install git
 
@@ -8,7 +8,7 @@ RUN yarn install --frozen-lockfile
 
 ###
 
-FROM arm64v8/node:16 AS builder
+FROM arm64v8/node:18 AS builder
 
 RUN apt-get update && apt-get -y install git
 # This way the pull should not be cached 
@@ -26,7 +26,7 @@ RUN yarn build-docker
 
 ###
 # Production image, copy all the files and run next
-FROM arm64v8/node:16 AS runner
+FROM arm64v8/node:18 AS runner
 
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
