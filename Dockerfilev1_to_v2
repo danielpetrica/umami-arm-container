@@ -1,18 +1,19 @@
-FROM arm64v8/node:18 AS deps
+FROM arm64v8/node:18
 
 RUN apt-get update && apt-get -y install git
 ENV NEXT_TELEMETRY_DISABLED 1
 
-
+ADD "https://www.random.org/cgi-bin/randbyte?nbytes=10&format=h" skipcache
 RUN git clone --depth 1 --single-branch --branch master https://github.com/danielpetrica/migrate-v1-v2.git /app
+
+
+ENV DATABASE_TYPE 'mysql'
+ENV databaseType 'mysql'
+ENV BASE_PoutlineATH ''
+ENV NEXT_TELEMETRY_DISABLED 1
 WORKDIR /app
 
-
-ENV DATABASE_TYPE mysql
-ENV BASE_PATH ''
-ENV NEXT_TELEMETRY_DISABLED 1
-
-RUN yarn install --frozen-lockfile
+RUN yarn install
 RUN yarn build
 
 CMD ["yarn", "start"]
