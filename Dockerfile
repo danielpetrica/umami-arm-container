@@ -1,4 +1,4 @@
-FROM arm64v8/node:18 AS deps
+FROM arm64v8/node:22 AS deps
 
 RUN apt-get update && apt-get -y install git
 
