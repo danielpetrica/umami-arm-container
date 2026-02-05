@@ -6,12 +6,12 @@ name: buildDocker
 # documentation.
 
 on:
-  schedule:
-    - cron: '18 3 * * *'
-  push:
+  #schedule:
+   # - cron: '18 3 * * *'
+  #push:
     # branches: [ "main" ]
     # Publish semver tags as releases.
-    tags: [ 'v*.*.*' ]
+   # tags: [ 'v*.*.*' ]
 #  pull_request:
 #    branches: [ "main" ]
 
